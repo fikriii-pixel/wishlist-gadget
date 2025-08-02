@@ -19,7 +19,7 @@ model User {
   name     String
   email    String  @unique
   password String
-  image    String?   // optional, untuk kebutuhan avatar nanti
+  image    String?   
   gadgets  Gadget[]
 }
 
@@ -27,17 +27,25 @@ model User {
 model Gadget {
   id         String   @id @default(cuid())
   name       String
-  brand      String
-  description String?
-  user       User     @relation(fields: [userId], references: [id])
-  userId     String
-  category   Category @relation(fields: [categoryId], references: [id])
+  image      String
+  price      Int
+  status     Status   @default(WISHLIST)
   categoryId String
+  userId     String
   createdAt  DateTime @default(now())
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
 }
 
 model Category {
   id      String   @id @default(cuid())
   name    String   @unique
   gadgets Gadget[]
+}
+
+enum Status {
+  WISHLIST
+  BOUGHT
+  PENDING
 }

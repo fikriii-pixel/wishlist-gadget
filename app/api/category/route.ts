@@ -1,17 +1,11 @@
-import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/db";
 
-export async function POST(req: Request) {
-  const formData = await req.formData();
-  const name = formData.get("name") as string;
+// GET semua kategori
+export async function GET() {
+  const categories = await prisma.category.findMany({
+    orderBy: { name: "asc" },
+  });
 
-  if (!name) return NextResponse.json({ message: "Nama kategori wajib diisi" }, { status: 400 });
-
-  const exists = await prisma.category.findUnique({ where: { name } });
-  if (exists) {
-    return NextResponse.json({ message: "Kategori sudah ada" }, { status: 400 });
-  }
-
-  const category = await prisma.category.create({ data: { name } });
-  return NextResponse.redirect(new URL("/category", req.url));
+  return NextResponse.json(categories);
 }

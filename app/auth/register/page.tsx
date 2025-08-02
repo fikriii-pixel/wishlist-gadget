@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -33,18 +34,24 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <form onSubmit={handleSubmit} className="w-full max-w-sm bg-white p-6 rounded-lg shadow">
-        <h1 className="text-xl font-bold mb-4">Register</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-100 to-blue-300 px-4">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg space-y-6"
+      >
+        <h1 className="text-2xl font-bold text-center text-gray-800">Register</h1>
 
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+        {error && (
+          <p className="bg-red-100 text-red-700 px-4 py-2 rounded text-sm text-center">
+            {error}
+          </p>
+        )}
 
         <Input
           type="text"
           placeholder="Nama Lengkap"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mb-4"
           required
         />
         <Input
@@ -52,7 +59,6 @@ export default function RegisterPage() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="mb-4"
           required
         />
         <Input
@@ -60,13 +66,25 @@ export default function RegisterPage() {
           placeholder="Password (min 6 karakter)"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="mb-6"
           required
         />
 
-        <Button type="submit" className="w-full">
-          Register
+        <Button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded"
+        >
+          Daftar
         </Button>
+
+        <div className="text-sm text-center text-gray-600">
+          Sudah punya akun?{" "}
+          <Link
+            href="/auth/login"
+            className="text-blue-600 hover:underline"
+          >
+            Login di sini
+          </Link>
+        </div>
       </form>
     </div>
   );

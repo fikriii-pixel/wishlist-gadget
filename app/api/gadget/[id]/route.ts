@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { Status } from "@prisma/client";
+
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
@@ -19,7 +21,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
 
     await prisma.gadget.update({
       where: { id: params.id, userId: session.user.id },
-      data: { name, image, price, status, categoryId },
+      data: { name, image, price, status: status as Status, categoryId },
     });
 
     return NextResponse.redirect(new URL("/dashboard", req.url));

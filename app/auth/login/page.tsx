@@ -29,47 +29,51 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <form onSubmit={handleSubmit} className="w-full max-w-sm bg-white p-6 rounded-lg shadow">
-        <h1 className="text-xl font-bold mb-4">Login</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-100 to-blue-300 px-4">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg space-y-6"
+      >
+        <h1 className="text-2xl font-bold text-center text-gray-800">Login</h1>
 
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+        {error && (
+          <p className="bg-red-100 text-red-700 px-4 py-2 rounded text-sm text-center">
+            {error}
+          </p>
+        )}
 
-        <Input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="mb-4"
-          required
-        />
-        <Input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="mb-6"
-          required
-        />
+        <div className="space-y-4">
+          <Input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
 
-        <Button type="submit" className="w-full mb-2">
+        <Button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded"
+        >
           Login
         </Button>
 
-        {/* Link ke logout dan halaman utama */}
-        <div className="text-center text-sm text-gray-600 mt-4 space-y-1">
-          <p>
-            Belum punya akun?{" "}
-            <Link href="/auth/register" className="text-blue-600 hover:underline">
-              Daftar di sini
-            </Link>
-          </p>
-          <p>
-            Sudah login dan ingin keluar?{" "}
-            <Link href="/auth/logout" className="text-red-600 hover:underline">
-              Logout
-            </Link>
-          </p>
+        <div className="text-sm text-center text-gray-600">
+          Belum punya akun?{" "}
+          <Link
+            href="/auth/register"
+            className="text-blue-600 hover:underline"
+          >
+            Daftar di sini
+          </Link>
         </div>
       </form>
     </div>

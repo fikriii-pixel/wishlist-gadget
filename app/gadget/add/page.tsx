@@ -62,60 +62,67 @@ export default function AddGadgetPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6">
-      <h1 className="text-xl font-bold mb-4">Tambah Gadget</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {error && <p className="text-red-500">{error}</p>}
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+      <div className="max-w-xl w-full bg-white p-6 rounded-lg shadow">
+        <h1 className="text-2xl font-semibold text-gray-800 mb-4">Tambah Gadget</h1>
 
-        <Input
-          name="name"
-          placeholder="Nama Gadget"
-          onChange={handleChange}
-          required
-        />
-        <Input
-          name="image"
-          placeholder="URL Gambar"
-          onChange={handleChange}
-          required
-        />
-        <Input
-          name="price"
-          type="number"
-          placeholder="Harga"
-          onChange={handleChange}
-          required
-        />
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {error && <p className="text-red-500">{error}</p>}
 
-        <select
-          name="status"
-          onChange={handleChange}
-          value={form.status}
-          className="w-full px-3 py-2 border rounded-md"
-        >
-          <option value="WISHLIST">WISHLIST</option>
-          <option value="BOUGHT">BOUGHT</option>
-          <option value="PENDING">PENDING</option>
-        </select>
+          <Input
+            name="name"
+            placeholder="Nama Gadget"
+            onChange={handleChange}
+            value={form.name}
+            required
+          />
+          <Input
+            name="image"
+            placeholder="URL Gambar"
+            onChange={handleChange}
+            value={form.image}
+            required
+          />
+          <Input
+            name="price"
+            type="number"
+            placeholder="Harga"
+            onChange={handleChange}
+            value={form.price}
+            required
+          />
 
-        <select
-          name="categoryId"
-          onChange={handleChange}
-          className="w-full px-3 py-2 border rounded-md"
-          required
-        >
-          <option value="">Pilih Kategori</option>
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.id}>
-              {cat.name}
-            </option>
-          ))}
-        </select>
+          <select
+            name="status"
+            onChange={handleChange}
+            value={form.status}
+            className="w-full px-3 py-2 border rounded-md bg-white"
+          >
+            <option value="WISHLIST">Wishlist</option>
+            <option value="BOUGHT">Dibeli</option>
+            <option value="PENDING">Menunggu</option>
+          </select>
 
-        <Button type="submit" className="w-full">
-          Simpan
-        </Button>
-      </form>
+          <select
+            name="categoryId"
+            onChange={handleChange}
+            value={form.categoryId}
+            className="w-full px-3 py-2 border rounded-md bg-white"
+            required
+          >
+            <option value="">Pilih Kategori</option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+
+          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+            Simpan
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

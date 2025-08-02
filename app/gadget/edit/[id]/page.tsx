@@ -26,71 +26,82 @@ export default async function EditGadgetPage({ params }: Params) {
 
   const categories: Category[] = await prisma.category.findMany();
 
-  if (!gadget) return <p className="text-center text-red-500">Gadget tidak ditemukan.</p>;
+  if (!gadget) {
+    return (
+      <p className="text-center text-red-500 mt-8">
+        Gadget tidak ditemukan.
+      </p>
+    );
+  }
 
   return (
-    <form
-      action={`/api/gadget/${gadget.id}`}
-      method="POST"
-      className="max-w-xl mx-auto p-6 space-y-4"
-    >
-      <h1 className="text-xl font-bold mb-4">Edit Gadget</h1>
-
-      <input
-        type="text"
-        name="name"
-        defaultValue={gadget.name}
-        className="w-full border px-3 py-2 rounded"
-        required
-      />
-
-      <input
-        type="text"
-        name="image"
-        defaultValue={gadget.image}
-        className="w-full border px-3 py-2 rounded"
-        required
-      />
-
-      <input
-        type="number"
-        name="price"
-        defaultValue={gadget.price}
-        className="w-full border px-3 py-2 rounded"
-        required
-      />
-
-      <select
-        name="status"
-        defaultValue={gadget.status}
-        className="w-full border px-3 py-2 rounded"
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+      <form
+        action={`/api/gadget/${gadget.id}`}
+        method="POST"
+        className="w-full max-w-xl bg-white p-6 rounded-lg shadow space-y-4"
       >
-        <option value="WISHLIST">WISHLIST</option>
-        <option value="BOUGHT">BOUGHT</option>
-        <option value="PENDING">PENDING</option>
-      </select>
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">Edit Gadget</h1>
 
-      <select
-        name="categoryId"
-        defaultValue={gadget.categoryId}
-        className="w-full border px-3 py-2 rounded"
-        required
-      >
-        {categories.map((cat) => (
-          <option key={cat.id} value={cat.id}>
-            {cat.name}
-          </option>
-        ))}
-      </select>
+        <input
+          type="text"
+          name="name"
+          defaultValue={gadget.name}
+          placeholder="Nama Gadget"
+          className="w-full border px-3 py-2 rounded"
+          required
+        />
 
-      <input type="hidden" name="_method" value="PUT" />
+        <input
+          type="text"
+          name="image"
+          defaultValue={gadget.image}
+          placeholder="URL Gambar"
+          className="w-full border px-3 py-2 rounded"
+          required
+        />
 
-      <button
-        type="submit"
-        className="w-full bg-blue-600 text-white py-2 px-4 rounded"
-      >
-        Simpan Perubahan
-      </button>
-    </form>
+        <input
+          type="number"
+          name="price"
+          defaultValue={gadget.price}
+          placeholder="Harga"
+          className="w-full border px-3 py-2 rounded"
+          required
+        />
+
+        <select
+          name="status"
+          defaultValue={gadget.status}
+          className="w-full border px-3 py-2 rounded bg-white"
+        >
+          <option value="WISHLIST">Wishlist</option>
+          <option value="BOUGHT">Dibeli</option>
+          <option value="PENDING">Menunggu</option>
+        </select>
+
+        <select
+          name="categoryId"
+          defaultValue={gadget.categoryId}
+          className="w-full border px-3 py-2 rounded bg-white"
+          required
+        >
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
+
+        <input type="hidden" name="_method" value="PUT" />
+
+        <button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
+        >
+          Simpan Perubahan
+        </button>
+      </form>
+    </div>
   );
 }
