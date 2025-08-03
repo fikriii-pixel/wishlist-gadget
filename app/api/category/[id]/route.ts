@@ -1,13 +1,16 @@
 import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(
-  req: NextRequest,
-  context: { params: { id: string } }
-) {
-  const { params } = context;
+export async function POST(req: NextRequest) {
   const formData = await req.formData();
   const method = formData.get("_method");
+
+  // Ambil ID dari URL
+  const id = req.nextUrl.pathname.split("/").pop(); // ambil ID dari URL
+
+  if (!id) {
+    return NextResponse.json({ message: "ID tidak ditemukan" }, { status: 400 });
+  }
 
   if (method === "PUT") {
     const name = formData.get("name") as string;
@@ -16,7 +19,7 @@ export async function POST(
     }
 
     await prisma.category.update({
-      where: { id: params.id },
+      where: { id },
       data: { name },
     });
 
@@ -25,7 +28,7 @@ export async function POST(
 
   if (method === "DELETE") {
     await prisma.category.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.redirect(new URL("/category", req.url));
